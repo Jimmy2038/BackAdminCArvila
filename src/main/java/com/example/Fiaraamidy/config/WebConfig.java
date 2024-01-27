@@ -21,7 +21,6 @@ public class WebConfig {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         CorsConfiguration config = new CorsConfiguration();
         config.setAllowCredentials(true);
-        config.setAllowCredentials(true);
         config.addAllowedOrigin("*"); // Vous pouvez spécifier des domaines autorisés ici
         config.addAllowedHeader("*");
         config.addAllowedMethod("*");
