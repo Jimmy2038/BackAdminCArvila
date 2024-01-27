@@ -22,7 +22,6 @@ import java.util.List;
 
 
 @RestController
-@CrossOrigin(origins = "https://tiny-smakager-838b3d.netlify.app")
 public class UtilisateurController {
 
     private final UtilisateurService userService;
