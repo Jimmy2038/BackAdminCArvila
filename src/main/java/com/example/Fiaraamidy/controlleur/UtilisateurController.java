@@ -22,6 +22,7 @@ import java.util.List;
 
 
 @RestController
+@CrossOrigin
 public class UtilisateurController {
 
     private final UtilisateurService userService;
