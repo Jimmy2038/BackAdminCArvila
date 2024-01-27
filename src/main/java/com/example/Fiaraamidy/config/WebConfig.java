@@ -12,7 +12,8 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 import java.util.Arrays;
 
-
+@Configuration
+@EnableWebMvc
 public class WebConfig {
 
     @Bean

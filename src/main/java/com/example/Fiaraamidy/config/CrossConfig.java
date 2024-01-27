@@ -7,7 +7,7 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
-@Configuration
+//@Configuration
 public class CrossConfig {
     @Bean
     public CorsConfigurationSource configurationSource()
