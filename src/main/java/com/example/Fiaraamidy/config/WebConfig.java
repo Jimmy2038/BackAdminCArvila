@@ -22,9 +22,7 @@ public class WebConfig {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         CorsConfiguration config = new CorsConfiguration();
         config.setAllowCredentials(true);
-        config.addAllowedOrigin("https://aromatic-fork-production.up.railway.app");
-        config.addAllowedOrigin("https://tiny-smakager-838b3d.netlify.app");
-        config.setAllowedHeaders(Arrays.asList(
+      config.setAllowedHeaders(Arrays.asList(
                 HttpHeaders.AUTHORIZATION,
                 HttpHeaders.CONTENT_TYPE,
                 HttpHeaders.ACCEPT
