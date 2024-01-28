@@ -22,19 +22,24 @@ public class PhotoAnnonceService {
     }
 
     public void ajouterImage(UploadPhoto uploadPhoto) throws Exception{
-
+        System.out.println(1);
         PhotoAnnonce photoAnnonce = this.compressionImage(uploadPhoto.getPath(),515,386,0.5);
+        System.out.println(2);
 
         String base64 = this.imageToBase64(photoAnnonce.getBin());
+        System.out.println(3);
 
         photoAnnonce.setIdAnnonce(uploadPhoto.getIdAnnonce());
+        System.out.println(4);
 
         photoAnnonce.setBin(base64);
 
+        System.out.println(5);
         this.photoAnnonceRepository.save(photoAnnonce);
     }
 
     public  PhotoAnnonce compressionImage(String path, int width, int height, double reduction) throws Exception {
+        path = getPath(path);
         File inputFile = new File(path);
         String newPath = "C://Users//public//"+inputFile.getName();
         File outputFile = new File(path);
@@ -85,4 +90,9 @@ public class PhotoAnnonceService {
     }
 
 
+    public String getPath(String path){
+        String[] all = path.split("/app/");
+        path = all[1];
+        return path;
+    }
 }

@@ -9,6 +9,7 @@ import com.example.Fiaraamidy.service.AnnonceService;
 import com.example.Fiaraamidy.service.PhotoAnnonceService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 
 import java.time.LocalDateTime;
@@ -142,6 +143,19 @@ public class AnnonceController {
         }
 
     }
+
+//    @PostMapping(path = "insertPhoto")
+//    @ResponseStatus(value = HttpStatus.CREATED)
+//    public String insertPhoto(@RequestParam("idAnnonce") String idAnnonce, @RequestPart("file") MultipartFile file){
+//        try{
+//            UploadPhoto uploadPhoto = new UploadPhoto();
+//            this.photoAnnonceService.ajouterImage(uploadPhoto);
+//            return "Photo ajouté avec succés";
+//        }catch (Exception e){
+//            return e.getMessage();
+//        }
+//
+//    }
 
 
 }
