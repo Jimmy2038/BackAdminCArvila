@@ -11,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -47,6 +48,8 @@ public class AnnonceController {
     public String cree(@RequestBody Annonce annonce)
     {
         try{
+            LocalDateTime currentDateTime = LocalDateTime.now();
+            annonce.setDaty(currentDateTime);
             this.annonceService.create(annonce);
             return "Creation annonce reussie";
         } catch (Exception e){
@@ -130,12 +133,14 @@ public class AnnonceController {
 
     @PostMapping(path = "insertPhoto")
     @ResponseStatus(value = HttpStatus.CREATED)
-    public void insertPhoto(@RequestBody UploadPhoto uploadPhoto){
+    public String insertPhoto(@RequestBody UploadPhoto uploadPhoto){
         try{
             this.photoAnnonceService.ajouterImage(uploadPhoto);
+            return "Photo ajouté avec succés";
         }catch (Exception e){
-            System.out.println("olana: "+e.getMessage());
+            return e.getMessage();
         }
+
     }
 
 
