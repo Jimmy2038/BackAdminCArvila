@@ -12,6 +12,10 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 
+import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardCopyOption;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -132,23 +136,10 @@ public class AnnonceController {
         return this.photoAnnonceService.getAllPhoto();
     }
 
-    @PostMapping(path = "insertPhoto")
-    @ResponseStatus(value = HttpStatus.CREATED)
-    public String insertPhoto(@RequestBody UploadPhoto uploadPhoto){
-        try{
-            this.photoAnnonceService.ajouterImage(uploadPhoto);
-            return "Photo ajouté avec succés";
-        }catch (Exception e){
-            return e.getMessage();
-        }
-
-    }
-
 //    @PostMapping(path = "insertPhoto")
 //    @ResponseStatus(value = HttpStatus.CREATED)
-//    public String insertPhoto(@RequestParam("idAnnonce") String idAnnonce, @RequestPart("file") MultipartFile file){
+//    public String insertPhoto(@RequestBody UploadPhoto uploadPhoto){
 //        try{
-//            UploadPhoto uploadPhoto = new UploadPhoto();
 //            this.photoAnnonceService.ajouterImage(uploadPhoto);
 //            return "Photo ajouté avec succés";
 //        }catch (Exception e){
@@ -156,6 +147,28 @@ public class AnnonceController {
 //        }
 //
 //    }
+
+    @PostMapping(path = "insertPhoto")
+    @ResponseStatus(value = HttpStatus.CREATED)
+    public String insertPhoto(@RequestParam("idAnnonce") String idAnnonce, @RequestPart("file") MultipartFile file){
+        try{
+            Path tempPath = Files.createTempFile("temp", ".jpg");
+
+            // Copier le contenu du MultipartFile vers le chemin temporaire
+            Files.copy(file.getInputStream(), tempPath, StandardCopyOption.REPLACE_EXISTING);
+
+            // Vous pouvez maintenant utiliser tempPath comme chemin absolu du fichier
+            String absolutePath = tempPath.toAbsolutePath().toString();
+
+            File uploadPhoto = new File(absolutePath);
+            int id = Integer.parseInt(idAnnonce);
+            this.photoAnnonceService.ajouterImage(id,uploadPhoto);
+            return "mety";
+        }catch (Exception e){
+            return e.getMessage();
+        }
+
+    }
 
 
 }

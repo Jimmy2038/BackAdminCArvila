@@ -21,15 +21,15 @@ public class PhotoAnnonceService {
         this.photoAnnonceRepository = photoAnnonceRepository;
     }
 
-    public void ajouterImage(UploadPhoto uploadPhoto) throws Exception{
+    public void ajouterImage(int id,File file) throws Exception{
         System.out.println(1);
-        PhotoAnnonce photoAnnonce = this.compressionImage(uploadPhoto.getPath(),515,386,0.5);
+        PhotoAnnonce photoAnnonce = this.compressionImage(file,515,386,0.5);
         System.out.println(2);
 
         String base64 = this.imageToBase64(photoAnnonce.getBin());
         System.out.println(3);
 
-        photoAnnonce.setIdAnnonce(uploadPhoto.getIdAnnonce());
+        photoAnnonce.setIdAnnonce(id);
         System.out.println(4);
 
         photoAnnonce.setBin(base64);
@@ -38,33 +38,68 @@ public class PhotoAnnonceService {
         this.photoAnnonceRepository.save(photoAnnonce);
     }
 
-    public  PhotoAnnonce compressionImage(String path, int width, int height, double reduction) throws Exception {
-        path = getPath(path);
-        File inputFile = new File(path);
-        String newPath = "C://Users//public//"+inputFile.getName();
-        File outputFile = new File(path);
+//    public void ajouterImage(UploadPhoto uploadPhoto) throws Exception{
+//        System.out.println(1);
+//        PhotoAnnonce photoAnnonce = this.compressionImage(uploadPhoto.getPath(),515,386,0.5);
+//        System.out.println(2);
+//
+//        String base64 = this.imageToBase64(photoAnnonce.getBin());
+//        System.out.println(3);
+//
+//        photoAnnonce.setIdAnnonce(uploadPhoto.getIdAnnonce());
+//        System.out.println(4);
+//
+//        photoAnnonce.setBin(base64);
+//
+//        System.out.println(5);
+//        this.photoAnnonceRepository.save(photoAnnonce);
+//    }
 
-        long tailleAvant = inputFile.length();
+    public  PhotoAnnonce compressionImage(File file, int width, int height, double reduction) throws Exception {
 
+        long tailleAvant = file.length();
 
-        Thumbnails.of(inputFile)
+        Thumbnails.of(file)
                 .size(width, height)
                 .outputQuality(reduction) // varie de (0.0 - 1.0)
-                .toFile(outputFile);
+                .toFile(file);
 
-
-        int tailleApres = (int) outputFile.length();
-
-
-
-        System.out.println("Taille de l'image avant la compression : " + tailleAvant + " octets");
-        System.out.println("Taille de l'image après la compression : " + tailleApres + " octets");
-
+        int tailleApres = (int) file.length();
+//        System.out.println("Taille de l'image avant la compression : " + tailleAvant + " octets");
+//        System.out.println("Taille de l'image après la compression : " + tailleApres + " octets");
         System.out.println("Image compressée avec succès !");
-        PhotoAnnonce photo = new PhotoAnnonce(0,inputFile.getName(),tailleApres,".JPEG",path);
+        PhotoAnnonce photo = new PhotoAnnonce(0, file.getName(),tailleApres,".JPEG",file.getPath());
 
         return photo;
     }
+
+//    public  PhotoAnnonce compressionImage(String path, int width, int height, double reduction) throws Exception {
+//        path = getPath(path);
+//        File inputFile = new File(path);
+//        String newPath = "C://Users//public//"+inputFile.getName();
+//        File outputFile = new File(path);
+//
+//        long tailleAvant = inputFile.length();
+//
+//
+//        Thumbnails.of(inputFile)
+//                .size(width, height)
+//                .outputQuality(reduction) // varie de (0.0 - 1.0)
+//                .toFile(outputFile);
+//
+//
+//        int tailleApres = (int) outputFile.length();
+//
+//
+//
+//        System.out.println("Taille de l'image avant la compression : " + tailleAvant + " octets");
+//        System.out.println("Taille de l'image après la compression : " + tailleApres + " octets");
+//
+//        System.out.println("Image compressée avec succès !");
+//        PhotoAnnonce photo = new PhotoAnnonce(0,inputFile.getName(),tailleApres,".JPEG",path);
+//
+//        return photo;
+//    }
 
     public static String imageToBase64(String imagePath) throws Exception {
         File file = new File(imagePath);
